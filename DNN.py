@@ -15,12 +15,16 @@ import cv2
 import numpy as np
 import sys
 
+from servo import Servo
+
 import Condensation
 
 
 
-class objectDetect():
 
+class objectDetect():
+    CountLostFrame = 0
+    Count = 0
     kernel_perto = np.ones((39, 39), np.uint8)
     kernel_perto2 = np.ones((100, 100), np.uint8)
     kernel_medio = np.ones((22, 22), np.uint8)
@@ -41,7 +45,7 @@ class objectDetect():
         self.transformer = transformer
 
     def searchball(self, image):
-
+        BallFound = False
         frame, x, y, raio = Morphology(self,image,self.kernel_perto2)
         if (x==0 and y==0 and raio==0):
             frame, x, y, raio = Morphology(self,image,self.kernel_medio2)
@@ -50,17 +54,39 @@ class objectDetect():
                 if (x==0 and y==0 and raio==0):
                     frame, x, y, raio = Morphology(self,image,self.kernel_muito_longe2)
                     if (x==0 and y==0 and raio==0):
-#                        bkb.write_int(Mem,'VISION_LOST', 1)
-			print("Ball not found")
+                        self.CountLostFrame +=1
+                        print("@@@@@@@@@@@@@@@@@@@",self.CountLostFrame)
+                        if self.CountLostFrame==5:
+                            BallFound = False
+                            self.CountLostFrame = 0
+                            print("----------------------------------------------------------------------")
+                            print("----------------------------------------------------------------------")
+                            print("----------------------------------------------------------------------")
+                            print("--------------------------------------------------------Ball not found")
+                            print("----------------------------------------------------------------------")
+                            print("----------------------------------------------------------------------")
+                            print("----------------------------------------------------------------------")
+                            SearchLostBall()
 
-        return frame, x, y, raio
+        if (x!=0 and y!=0 and raio!=0):
+            BallFound = True
+        return frame, x, y, raio, BallFound
 
 
 def SearchLostBall(self):
-    self.servo.writeWord(self.__SERVO_PAN, self.__SPEED, 200)
-    self.servo.writeWord(self.__SERVO_PAN, self.__SPEED, 200)
-    self.servo.writeWord(self.__SERVO_PAN, self.__SPEED, 200)
 
+    if self.Count == 0:
+        servo.writeWord(self.__SERVO_PAN, self.__SPEED, 200)
+        Count +=1
+        return 0
+    if self.Count == 1:
+        servo.writeWord(self.__SERVO_PAN, self.__SPEED, 512)
+        Count +=1
+        return 0
+    if self.Count == 2:
+        servo.writeWord(self.__SERVO_PAN, self.__SPEED, 800)
+        Count = 0
+        return 0
 
 
 

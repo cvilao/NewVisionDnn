@@ -231,9 +231,8 @@ def thread_DNN():
 		print "FRAME = ", time.time() - script_start_time
 		start = time.time()
 #===============================================================================
-		ball = False
-		frame_b, x, y, raio, ball= detectBall.searchball(frame)
-		
+
+		frame_b, x, y, raio = detectBall.searchball(frame)
 		BallStatus(x,y)
 		#if args2.visionball:
 		cv2.circle(frame_b, (x, y), raio, (0, 255, 0), 4)
@@ -325,7 +324,7 @@ if __name__ == '__main__':
 		print "FRAME = ", time.time() - script_start_time
 		start = time.time()
 #===============================================================================
-#		cv2.imshow('Original',frame)
+		cv2.imshow('Original',frame)
 #		mask_verde = applyMask(frame)
 #		#if mask_verde is not 0:
 #		cut = cutFrame(mask_verde)
@@ -353,5 +352,5 @@ if __name__ == '__main__':
 #	if args2.withoutservo == False:
 #		head.finalize()
 #	ball.finalize()
-#	cv2.destroyAllWindows()
-#	cap.release()
+	cv2.destroyAllWindows()
+	cap.release()

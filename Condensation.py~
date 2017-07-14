@@ -102,12 +102,11 @@ def resampling(particles,weights):
 #            for i in range (len(sp[0])):
 #                resampled_particle += sp[0][i]*(sp[1]*N)
 #            resampled_particle += [sp[0]]*(sp[1]*float(N))
-            aux = sp[0]*(sp[1]*float(N))
-            aux = sp[0]*(sp[1]*float(N))
-            aux = sp[0]*(sp[1]*float(N))
+            aux = sp[0][0]*(sp[1]*float(N))
+            aux = sp[0][1]*(sp[1]*float(N))
+            aux = sp[0][2]*(sp[1]*float(N))
 #            aux = sp[0][3]*(sp[1]*float(N))
-            
-            resampled_particle += [aux[0]]
+            resampled_particle += [aux]
     resampled_particle = resampled_particle[0:N]
 
     return(resampled_particle)
